@@ -27,7 +27,7 @@ function App(props) {
     <div className="App">
       <h3>Your Cart</h3>
       <button onClick={decrementClick}>-</button><button>{cartCount}</button><button onClick={incrementClick}>+</button>
-      <button onClick={props.buttonAction}>Trigger action</button>
+      <button onClick={props.buttonAction}>PUTHUSU</button>
       <FieldLevelValidationForm onSubmit = {submitHandle} />
     </div>
   );
