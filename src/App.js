@@ -1,23 +1,47 @@
-import React from 'react';
-import { Link, Switch, Route } from 'react-router-dom';
-import {Page1, Page2, Page3} from './Page';
-import ReduxComponent from './ReduxComponent';
-import FormComponent from './FormComponent'
+import React, { useState } from 'react';
+import './App.css';
+import {buttonAction} from './Action';
+import {connect} from 'react-redux';
+import FieldLevelValidationForm from './ReduxFormValidation'
 
-export default function App() {
-    return (
-        <div>
-            <p>hey</p>
-            <Link to="/page1">Page1</Link>
-            <Link to="/page2">Page2</Link>
-            <Link to="/page3">Page3</Link>
-            <Switch>
-                <Route path="/page1">{Page1}</Route>
-                <Route path="/page2">{Page2}</Route>
-                <Route path="/page3">{Page3}</Route>
-            </Switch>
-            <ReduxComponent />
-            <FormComponent />
-        </div>
-    )
+
+function submitHandle(values) {
+    window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`);
 }
+
+function App(props) {
+  console.log(props.data)
+  const [cartCount, setCartCount] = useState(0);
+
+  function incrementClick() {
+    setCartCount(cartCount + 1)
+  }
+
+  function decrementClick() {
+    if(cartCount > 0) {
+      setCartCount(cartCount - 1)
+    }
+  }
+
+  return (
+    <div className="App">
+      <h3>Your Cart</h3>
+      <button onClick={decrementClick}>-</button><button>{cartCount}</button><button onClick={incrementClick}>+</button>
+      <button onClick={props.buttonAction}>Trigger action</button>
+      <FieldLevelValidationForm onSubmit = {submitHandle} />
+    </div>
+  );
+}
+const mapStateToProps = (state) => {
+  return {
+    data: state
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    buttonAction: () => dispatch(buttonAction())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

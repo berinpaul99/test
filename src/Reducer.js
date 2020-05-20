@@ -1,15 +1,13 @@
-export const Reducer = (state = {name: 'porcuppine'}, action) => {
-
-    switch(action.type) {
-        case "BUTTON_ACTION": {
+export const Reducer = (state = { name: "bp" }, action) => {
+    switch (action.type) {
+        case "button_action":
             return {
                 ...state,
-                secretName: action.payload
+                code: action.value
             }
-        }
+
         default: {
             return state
         }
     }
-
 }
